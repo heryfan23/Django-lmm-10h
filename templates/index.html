@@ -1,0 +1,39 @@
+{% extends "layouts/source.html" %}
+{% load static %}
+    
+{% block contenu %}
+  
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Bienvenue sur notre boutique d'électronique</h1>
+                <p class="subtitle">Découvrez notre sélection d'appareils électroniques de qualité</p>
+            </div>
+        </section>
+
+        <section id="products" class="container">
+            <h2 class="section-title">Nos Produits</h2>
+            <div class="product-grid">
+                {% for produit in listes_prod %}
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="{{ produit.images.url }}" alt="Smartphone">
+                        </div>
+                        <div class="product-info">
+                            <h3>{{ produit.nom }}</h3>
+                            <p> {{produit.description}} </p>
+                            <p class="price"> {{produit.prix}} €</p>
+                            <button class="btn-primary">Acheter</button>
+                        </div>
+                    </article>
+                {% endfor %}
+                
+            </div>
+            <div class="voir_tous" style="display: flex;justify-content: center">
+                <a href="{% url 'tous_produits' %}"><button style="padding: 10px 50px;background-color: blue;color: white;font-size: 1.5vw;border-radius: 15px;cursor: pointer;">Voir tous</button></a>
+            </div>
+        </section>
+    </main>
+
+   
+{% endblock contenu %}

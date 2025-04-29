@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    {% include "layouts/header.html" %}
+
+    {% block contenu %}
+      
+    {% endblock contenu %}
+
+    {% include "layouts/footer.html" %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('.smokey-cursor');
+    const trails = [];
+    const numTrails = 10;
+
+    // Create cursor trails
+    for (let i = 0; i < numTrails; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        document.body.appendChild(trail);
+        trails.push(trail);
+    }
+
+    // Track mouse movement
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // Animate trails
+    function animate() {
+        let x = mouseX;
+        let y = mouseY;
+
+        trails.forEach((trail, index) => {
+            const nextTrail = trails[index + 1] || trails[0];
+            x += (nextTrail.offsetLeft - x) * 0.3;
+            y += (nextTrail.offsetTop - y) * 0.3;
+
+            trail.style.left = `${x}px`;
+            trail.style.top = `${y}px`;
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+});
+    </script>
+</body>
+</html>

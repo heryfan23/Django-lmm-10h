@@ -1,0 +1,68 @@
+{% extends "layouts/source.html" %}
+{% block contenu %}
+<div class="form-container">
+    {% if erreur %}
+      <p style="font-size:2vw;color:red"> {{erreur}} </p>
+    {% endif %}
+    <form method="post" action="{% url 'connecter_membre' %}" class="login-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="********">
+        </div>
+        <button type="submit" class="btn-submit">Login</button>
+    </form>
+    <div class="text-center mt-3">
+        <p>si pas de compte? <a href="{% url 'inscription' %}" class="signup-link">Sign up here</a></p>
+    </div>
+</div>
+
+<style>
+    .form-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 5px;
+        margin-top: 20vh;
+    }
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .btn-submit {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+    .text-center {
+            text-align: center;
+        }
+        .mt-3 {
+            margin-top: 1rem;
+        }
+        .signup-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .signup-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+</style>
+{% endblock %}

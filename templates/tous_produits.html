@@ -1,0 +1,75 @@
+{% extends "layouts/source.html" %}
+
+{% block contenu %}
+<form action="" method="get">
+    <input type="search" name="rechercher" id="" placeholder="entrer un nom pour rechercher" value="{{ request.GET.search }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if prod_rechercher %}
+    <p style="margin-left: 10%;font-size: 1.5vw;color: red;">produits rechercher : <b>{{prod_rechercher}}</b></p>
+    {% if valeur_rech %}
+        {% for produit in valeur_rech %}
+            <article class="product-card">
+                <div class="product-image">
+                    <img src="{{ produit.images.url }}" alt="Smartphone">
+                </div>
+                <div class="product-info">
+                    <h3>{{ produit.nom }}</h3>
+                    <p> {{produit.description}} </p>
+                    <p class="price"> {{produit.prix}} €</p>
+                    <button class="btn-primary">Acheter</button>
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+    <p>Produits tsy misy</p>
+    {% endif %}
+{% else %}
+<div class="product-grid" >
+    {% for produit in produits %}
+        <article class="product-card">
+            <div class="product-image">
+                <img src="{{ produit.images.url }}" alt="Smartphone">
+            </div>
+            <div class="product-info">
+                <h3>{{ produit.nom }}</h3>
+                <p> {{produit.description}} </p>
+                <p class="price"> {{produit.prix}} €</p>
+                <button class="btn-primary">Acheter</button>
+            </div>
+        </article>
+    {% endfor %}
+    
+</div>
+{% endif %}
+
+
+<style>
+    form{
+        margin-top: 12vh;
+        margin-bottom: 5vh;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    form input{
+        width: 30%;
+        height: 30px;
+        padding-left: 5px;
+        border-radius: 15px;
+
+    }
+    form button{
+        width: 10%;
+        height: 30px;
+        border-radius: 15px;
+        cursor: pointer;
+        background-color: red;
+        color: white;
+        font-size: 15px;
+        border: none;
+    }
+</style>
+
+{% endblock %}
