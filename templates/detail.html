@@ -1,0 +1,24 @@
+{% extends "layouts/source.html" %}
+
+{% block contenu %}
+<div class="product-grid">
+        <article class="product-card">
+            <div class="product-image">
+                <img src="../{{ prod.images.url }}" alt="Smartphone">
+            </div>
+            <div class="product-info">
+                <h3>{{ prod.nom }}</h3>
+                <p> {{prod.description}} </p>
+                <p class="price"> {{prod.prix}} €</p>
+                <p> {{prod.types}} </p>
+            </div>
+            {% if request.session.client %}
+                <a href="{% url 'pannier' prod.id %}"><button>Ajouter Pannier</button></a>
+              
+            {% else %}
+                <a href="{% url 'connection' %}"><button>Ajouter Pannier</button></a>
+            {% endif %}
+        </article>
+</div>
+  
+{% endblock contenu %}

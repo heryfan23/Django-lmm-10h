@@ -1,9 +1,10 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Membres
 from datetime import datetime
 import hashlib
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth import logout
 
 # Create your views here.
 def crypter(password):
@@ -87,7 +88,7 @@ def faire_connection(request):
                         "pseudo": membre.pseudo,
                         "images" :str(membre.photo)
                     }
-                    return render(request,"index.html")
+                    return redirect("http://127.0.0.1:8000/")
                 else:
                     erreur = "mot de passe ou email non existant"
                     return render(request,"connection.html",{"erreur":erreur})
@@ -99,3 +100,8 @@ def faire_connection(request):
         else:
             erreur = "veuiller remplir tous les champs"
             return render(request,"connection.html",{"erreur":erreur})
+        
+def deconnexion(request):
+    logout(request)
+    request.session.clear()
+    return redirect("connection")

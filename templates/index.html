@@ -17,13 +17,16 @@
                 {% for produit in listes_prod %}
                     <article class="product-card">
                         <div class="product-image">
-                            <img src="{{ produit.images.url }}" alt="Smartphone">
+                            <img src="../{{ produit.images.url }}" alt="Smartphone">
                         </div>
                         <div class="product-info">
                             <h3>{{ produit.nom }}</h3>
                             <p> {{produit.description}} </p>
                             <p class="price"> {{produit.prix}} €</p>
-                            <button class="btn-primary">Acheter</button>
+
+                            <a href="{% url 'detail' produit.id %}">
+                                <button class="btn-primary">Voir details</button>
+                            </a>
                         </div>
                     </article>
                 {% endfor %}

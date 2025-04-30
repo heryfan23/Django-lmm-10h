@@ -40,3 +40,12 @@ def aff_produits(request):
     }
 
     return render(request,"tous_produits.html",context)
+
+def afficher_details(request,id):
+    produits = Produits.objects.get(id=id)
+    
+    context = {
+        "prod" : produits
+    }
+    return render(request,"detail.html",context)
+    

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_accueil',
     'app_contact',
-    'app_connection'
+    'app_connection',
+    "app_pannier"
 ]
 
 MIDDLEWARE = [
