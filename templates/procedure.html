@@ -1,0 +1,40 @@
+{% extends "layouts/source.html" %}
+
+{% block contenu %}
+  <section class="section_1">
+    <h3>Procedure Stripe</h3>
+    <form action="">
+        <div>
+            <label for="">email</label>
+            <input type="email" name="email">
+        </div>
+        <div>
+            <h3>Information du carte</h3>
+            <div id="card-element"></div>
+        </div>
+        <div>
+            <h3>Total à payer <b id="prixTotal"></b></h3>
+        </div>
+    </form>
+
+  </section>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    let prixTotal = document.getElementById("prixTotal")
+    prixTotal.textContent = `${sessionStorage.getItem("prix_total")} €`
+
+    var stripe = Stripe("pk_test_51PiC0g2N6YOP94rlqrXA0GXmIXAHwHCbA37OF5ST6zGBax5q3Ht4lGOkQzLc50hmNV3ytq4aBVaBJ1ALL7jpaC6I00jxpfsccE")
+    var elements = stripe.elements();
+    var card = elements.create('card')
+
+    card.mount('#card-element');
+  </script>
+
+  <style>
+    .section_1{
+            margin-top: 10vh;
+            padding: 2rem;
+        }
+  </style>
+{% endblock contenu %}

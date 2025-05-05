@@ -1,0 +1,170 @@
+{% extends "layouts/source.html" %}
+
+{% block contenu %}
+    <section class="sect">
+        <h2>Mon Panier</h2>
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Quantité</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prod in produits_tous %}
+                    <tr id="listes_table">
+                        <td>{{ prod.id_prod }}</td>
+                        <td>{{ prod.type }}</td>
+                        <td>{{ prod.nom }}</td>
+                        <td class="prix">{{ prod.prix }} €</td>
+                        <td>{{ prod.desc }}</td>
+                        <td>
+                            <img src="../{{ prod.image }}" alt="{{ prod.nom }}">
+                        </td>
+                        <td>
+                            <input type="number" name="" id="nombre" value="{{ prod.nombre }}" min="1">
+                        </td>
+                        <td>
+                            <button class="delete-btn">
+                                <i class="fas fa-trash"></i>
+                                <a href="{% url 'suppr' prod.id_prod %}">Supprimer</a>
+                            </button>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8" class="empty-cart">
+                            Votre panier est vide
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <h3>Prix Total : <span id="total"></span> </h3>
+        </div>
+        <div>
+            <h3>Acheter avec : <a href="{% url 'procedure_payement' %}" style="color: green;text-decoration: none;">Stripe</a></h3>
+        </div>
+    </section>
+    <script>
+        function totale_prix() {
+            let total = document.getElementById("total");
+            let tr = document.querySelectorAll("#listes_table");
+            let nombre = document.querySelectorAll("#nombre")
+            let prix = document.querySelectorAll(".prix")
+
+            let donner = []
+
+            prix.forEach(e=>{
+                donner.push(parseInt(e.textContent))
+            })
+            let somme = 0
+
+            donner.forEach((e,i) =>{
+                somme += e*parseInt(nombre[i].value)
+            })
+            total.textContent = `${somme} €`
+
+            if (!sessionStorage.getItem("prix_total")) {
+                sessionStorage.setItem("prix_total",JSON.stringify(somme));
+            }else{
+                sessionStorage.setItem("prix_total",JSON.stringify(somme));
+            }
+            if (somme === 0) {
+                sessionStorage.removeItem("prix_total")
+            }
+            return somme;
+        }
+        setInterval(totale_prix,100)
+    </script>
+    <style>
+        .sect {
+            margin-top: 10vh;
+            padding: 2rem;
+        }
+
+        .cart-table {
+            width: 90%;
+            margin: 2rem auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-table th {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .cart-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cart-table img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .total-label {
+            text-align: right;
+            font-weight: bold;
+            background: #f8fafc;
+        }
+
+        .total-amount {
+            font-weight: bold;
+            color: #3b82f6;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .cart-table {
+                width: 100%;
+                font-size: 0.9rem;
+            }
+
+            .cart-table th,
+            .cart-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+{% endblock %}

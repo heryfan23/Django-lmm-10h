@@ -8,7 +8,7 @@
                 <li><a href="{% url 'deconnexion' %}">Deconnexion</a></li>
                 <li><a href=""> {{request.session.client.pseudo}} </a></li>
                 <li><a href=""><img src="../{{request.session.client.images}}" alt="" style="width: 50px;height: 50px;border-radius: 100%;"></a></li>
-                <li><a href="">Pannier <b>{{request.session.nombre_pannier}}</b></a></li>
+                <li><a href="{% url 'mon_pannier' %}">Pannier <b>{{request.session.nombre_pannier}}</b></a></li>
             {% else %}
                 <li><a href="{% url 'page_home' %}">Accueil</a></li>
                 <li><a href="#products">Produits</a></li>
